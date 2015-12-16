@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="tab_IndicatorColor" format="color" />
+        <attr name="tab_UnderlineColor" format="color" />
+        <attr name="tab_DividerColor" format="color" />
+        <attr name="tab_IndicatorHeight" format="dimension" />
+        <attr name="tab_UnderlineHeight" format="dimension" />
+        <attr name="tab_DividerPadding" format="dimension" />
+        <attr name="tab_TabPaddingLeftRight" format="dimension" />
+        <attr name="tab_ScrollOffset" format="dimension" />
+        <attr name="tab_TabBackground" format="reference" />
+        <attr name="tab_ShouldExpand" format="boolean" />
+        <attr name="tab_TextAllCaps" format="boolean" />
+    </declare-styleable>
+</resources>
