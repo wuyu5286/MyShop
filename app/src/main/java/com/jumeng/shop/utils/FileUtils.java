@@ -8,4 +8,6 @@ package com.jumeng.shop.utils;
  * ============================================================
  */
 public class FileUtils {
+
+    private FileUtils(){}
 }
