@@ -1,7 +1,7 @@
 package com.jumeng.shop.db.util;
 
-import com.jumeng.shop.db.dao.TestModelDao;
-import com.jumeng.shop.db.service.TestService;
+import com.jumeng.shop.db.dao.CacheModelDao;
+import com.jumeng.shop.db.service.CacheService;
 
 /**
  * ============================================================
@@ -11,16 +11,16 @@ import com.jumeng.shop.db.service.TestService;
  * ============================================================
  */
 public class DbUtil {
-    private static TestService testService;
+    private static CacheService cacheService;
 
-    private static TestModelDao getCardDao() {
-        return DbCore.getDaoSession().getTestModelDao();
+    private static CacheModelDao getCardDao() {
+        return DbCore.getDaoSession().getCacheModelDao();
     }
 
-    public static TestService getTestService() {
-        if (testService == null) {
-            testService = new TestService(getCardDao());
+    public static CacheService getCacheService() {
+        if (cacheService == null) {
+            cacheService = new CacheService(getCardDao());
         }
-        return testService;
+        return cacheService;
     }
 }

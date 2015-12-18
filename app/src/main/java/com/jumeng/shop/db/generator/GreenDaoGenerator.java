@@ -11,7 +11,7 @@ import de.greenrobot.daogenerator.Schema;
  * 时 间 : 2015/12/18.
  * ============================================================
  */
-public class CacheGenerator {
+public class GreenDaoGenerator {
     //辅助文件生成的相对路径
     public static final String DAO_PATH = "./app/src/main/java";
     //辅助文件的包名
@@ -24,7 +24,7 @@ public class CacheGenerator {
         Schema schema = new Schema(DATA_VERSION_CODE, MODEL_NAME);
         schema.setDefaultJavaPackageDao(DAO_NAME);
         schema.enableKeepSectionsByDefault();
-        addCache(schema, "TestModel");
+        addCache(schema, "CacheModel");
         //生成Dao文件路径
         new DaoGenerator().generateAll(schema, DAO_PATH);
 
