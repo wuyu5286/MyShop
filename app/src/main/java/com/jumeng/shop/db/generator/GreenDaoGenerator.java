@@ -6,9 +6,15 @@ import de.greenrobot.daogenerator.Schema;
 
 /**
  * ============================================================
+<<<<<<< Updated upstream
  * 描 述 :
  * 作 者 : 鸿浩
  * 时 间 : 2015/12/18.
+=======
+ * 描 述 : 用来为GreenDao框架生成Dao文件
+ * 作 者 : 鸿浩
+ * 时 间 : 2015/12/17.
+>>>>>>> Stashed changes
  * ============================================================
  */
 public class GreenDaoGenerator {
@@ -27,7 +33,6 @@ public class GreenDaoGenerator {
         addCache(schema, "CacheModel");
         //生成Dao文件路径
         new DaoGenerator().generateAll(schema, DAO_PATH);
-
     }
 
     /**
