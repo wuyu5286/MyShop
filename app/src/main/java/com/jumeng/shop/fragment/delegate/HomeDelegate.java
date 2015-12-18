@@ -1,11 +1,7 @@
 package com.jumeng.shop.fragment.delegate;
 
-import android.widget.TextView;
-
 import com.jumeng.shop.R;
 import com.jumeng.shop.interfaces.AppDelegate;
-
-import butterknife.Bind;
 
 /**
  * ============================================================
@@ -16,15 +12,8 @@ import butterknife.Bind;
  */
 public class HomeDelegate extends AppDelegate {
 
-    @Bind(R.id.home_text)
-    TextView mHomeText;
-
     @Override
     public int layoutResId() {
         return R.layout.fragment_home;
-    }
-
-    public TextView getHomeText() {
-        return mHomeText;
     }
 }
