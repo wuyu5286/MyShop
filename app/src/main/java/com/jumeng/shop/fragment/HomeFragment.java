@@ -1,5 +1,6 @@
 package com.jumeng.shop.fragment;
 
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.jumeng.shop.R;
@@ -22,6 +23,8 @@ public class HomeFragment extends BaseFragment<HomeDelegate> {
     @Override
     protected void onBind() {
         super.onBind();
+
+        Snackbar.make(viewDelegate.getView(), "", Snackbar.LENGTH_SHORT).show();
 
         viewDelegate.getHomeText().setOnClickListener(new View.OnClickListener() {
             @Override
