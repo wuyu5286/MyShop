@@ -1,9 +1,10 @@
 package com.jumeng.shop.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
-import android.os.Build;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,12 +28,26 @@ import android.widget.RelativeLayout;
  * ============================================================
  */
 public class RecyclerAttachView extends RelativeLayout {
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecycler;
+
     private int mDownScroll;
     private int mCurrentScroll;
-    private boolean mReversed;//是否反转
-    private boolean mAlreadyAligned;//是否对齐
+    private boolean mReversed;
+    private boolean mAlreadyAligned;
     private boolean mRecyclerWantsTouchEvent;
+
+    /**
+     * Inflates layout from <code>xml</code> and encapsulates it with <code>RecyclerViewHeader</code>.
+     *
+     * @param context   application context.
+     * @param layoutRes layout resource to be inflated.
+     * @return <code>RecyclerViewHeader</code> view object.
+     */
+    public static RecyclerAttachView fromXml(Context context, @LayoutRes int layoutRes) {
+        RecyclerAttachView header = new RecyclerAttachView(context);
+        View.inflate(context, layoutRes, header);
+        return header;
+    }
 
     public RecyclerAttachView(Context context) {
         super(context);
@@ -42,34 +57,46 @@ public class RecyclerAttachView extends RelativeLayout {
         super(context, attrs);
     }
 
-    public RecyclerAttachView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public RecyclerAttachView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
-    public static RecyclerAttachView fromXml(Context context, @LayoutRes int layoutResID) {
-        RecyclerAttachView view = new RecyclerAttachView(context);
-        View.inflate(context, layoutResID, view);
-        return view;
+    /**
+     * Attaches <code>RecyclerViewHeader</code> to <code>RecyclerView</code>.
+     * This method will perform necessary actions to properly align the header within <code>RecyclerView</code>.
+     * Be sure that <code>setLayoutManager(...)</code> has been called for <code>RecyclerView</code> before calling this method.
+     * Also, if you were planning to use <code>setOnScrollListener(...)</code> method for your <code>RecyclerView</code>, be sure to do it before calling this method.
+     *
+     * @param recycler <code>RecyclerView</code> to attach <code>RecyclerViewHeader</code> to.
+     */
+    public void attachTo(RecyclerView recycler) {
+        attachTo(recycler, false);
     }
 
-    public void attachTo(RecyclerView recyclerView) {
-        attachTo(recyclerView, false);
+    /**
+     * Attaches <code>RecyclerViewHeader</code> to <code>RecyclerView</code>.
+     * Be sure that <code>setLayoutManager(...)</code> has been called for <code>RecyclerView</code> before calling this method.
+     * Also, if you were planning to use <code>setOnScrollListener(...)</code> method for your <code>RecyclerView</code>, be sure to do it before calling this method.
+     *
+     * @param recycler             <code>RecyclerView</code> to attach <code>RecyclerViewHeader</code> to.
+     * @param headerAlreadyAligned If set to <code>false</code>, method will perform necessary actions to properly align
+     *                             the header within <code>RecyclerView</code>. If set to <code>true</code> method will assume,
+     *                             that user has already aligned <code>RecyclerViewHeader</code> properly.
+     */
+    public void attachTo(RecyclerView recycler, boolean headerAlreadyAligned) {
+        validateRecycler(recycler, headerAlreadyAligned);
+
+        mRecycler = recycler;
+        mAlreadyAligned = headerAlreadyAligned;
+        mReversed = isLayoutManagerReversed(recycler);
+
+        setupAlignment(recycler);
+        setupHeader(recycler);
     }
 
-    public void attachTo(RecyclerView recyclerView, boolean alreadyAligned) {
-        validateRecycler(recyclerView, alreadyAligned);
-
-        mRecyclerView = recyclerView;
-        mAlreadyAligned = alreadyAligned;
-        mReversed = isLayoutManagerReversed(recyclerView);
-
-        setUpAlignment(recyclerView);
-        setUpAttach(recyclerView);
-    }
-
-    private boolean isLayoutManagerReversed(RecyclerView recyclerView) {
+    private boolean isLayoutManagerReversed(RecyclerView recycler) {
         boolean reversed = false;
-        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+        RecyclerView.LayoutManager manager = recycler.getLayoutManager();
         if (manager instanceof LinearLayoutManager) {
             reversed = ((LinearLayoutManager) manager).getReverseLayout();
         } else if (manager instanceof StaggeredGridLayoutManager) {
@@ -78,42 +105,43 @@ public class RecyclerAttachView extends RelativeLayout {
         return reversed;
     }
 
-    private void setUpAlignment(RecyclerView recyclerView) {
+    private void setupAlignment(RecyclerView recycler) {
         if (!mAlreadyAligned) {
-            //设置attachView对齐
+            //setting alignment of header
             ViewGroup.LayoutParams currentParams = getLayoutParams();
-            FrameLayout.LayoutParams newParams;
+            FrameLayout.LayoutParams newHeaderParams;
             int width = ViewGroup.LayoutParams.WRAP_CONTENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             int gravity = (mReversed ? Gravity.BOTTOM : Gravity.TOP) | Gravity.CENTER_HORIZONTAL;
             if (currentParams != null) {
-                newParams = new FrameLayout.LayoutParams(getLayoutParams());
-                newParams.width = width;
-                newParams.height = height;
-                newParams.gravity = gravity;
+                newHeaderParams = new FrameLayout.LayoutParams(getLayoutParams()); //to copy all the margins
+                newHeaderParams.width = width;
+                newHeaderParams.height = height;
+                newHeaderParams.gravity = gravity;
             } else {
-                newParams = new FrameLayout.LayoutParams(width, height, gravity);
+                newHeaderParams = new FrameLayout.LayoutParams(width, height, gravity);
             }
-            RecyclerAttachView.this.setLayoutParams(newParams);
+            RecyclerAttachView.this.setLayoutParams(newHeaderParams);
 
-            //设置RecyclerView对齐
-            FrameLayout newRootParent = new FrameLayout(recyclerView.getContext());
-            newRootParent.setLayoutParams(recyclerView.getLayoutParams());
-            ViewParent currentParent = recyclerView.getParent();
+            //setting alignment of recycler
+            FrameLayout newRootParent = new FrameLayout(recycler.getContext());
+            newRootParent.setLayoutParams(recycler.getLayoutParams());
+            ViewParent currentParent = recycler.getParent();
             if (currentParent instanceof ViewGroup) {
-                int indexParent = ((ViewGroup) currentParent).indexOfChild(recyclerView);
+                int indexWithinParent = ((ViewGroup) currentParent).indexOfChild(recycler);
 
-                ((ViewGroup) currentParent).removeViewAt(indexParent);
-                recyclerView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                newRootParent.addView(recyclerView);
+                ((ViewGroup) currentParent).removeViewAt(indexWithinParent);
+                recycler.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                newRootParent.addView(recycler);
                 newRootParent.addView(RecyclerAttachView.this);
-                ((ViewGroup) currentParent).addView(newRootParent, indexParent);
+                ((ViewGroup) currentParent).addView(newRootParent, indexWithinParent);
             }
         }
     }
 
-    private void setUpAttach(final RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+    @SuppressLint("NewApi")
+    private void setupHeader(final RecyclerView recycler) {
+        recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -127,10 +155,9 @@ public class RecyclerAttachView extends RelativeLayout {
             public void onGlobalLayout() {
                 int height = RecyclerAttachView.this.getHeight();
                 if (height > 0) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                         RecyclerAttachView.this.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                     } else {
-                        //noinspection deprecation
                         RecyclerAttachView.this.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
 
@@ -140,46 +167,47 @@ public class RecyclerAttachView extends RelativeLayout {
                         height += params.bottomMargin;
                     }
 
-                    recyclerView.addItemDecoration(new AttachItemDecoration(recyclerView.getLayoutManager(), height), 0);
+                    recycler.addItemDecoration(new HeaderItemDecoration(recycler.getLayoutManager(), height), 0);
                 }
             }
         });
     }
 
-    private void validateRecycler(RecyclerView recyclerView, boolean alreadyAligned) {
-        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+    private void validateRecycler(RecyclerView recycler, boolean headerAlreadyAligned) {
+        RecyclerView.LayoutManager layoutManager = recycler.getLayoutManager();
         if (layoutManager == null) {
-            throw new IllegalStateException("RecyclerView必须设置LayoutManager");
-        } else if (layoutManager.getClass() != LinearLayoutManager.class
+            throw new IllegalStateException("Be sure to call RecyclerViewHeader constructor after setting your RecyclerView's LayoutManager.");
+        } else if (layoutManager.getClass() != LinearLayoutManager.class    //not using instanceof on purpose
                 && layoutManager.getClass() != GridLayoutManager.class
                 && !(layoutManager instanceof StaggeredGridLayoutManager)) {
-            throw new IllegalArgumentException("目前只适用于默认的三种LayoutManager");
+            throw new IllegalArgumentException("Currently RecyclerViewHeader supports only LinearLayoutManager, GridLayoutManager and StaggeredGridLayoutManager.");
         }
 
         if (layoutManager instanceof LinearLayoutManager) {
             if (((LinearLayoutManager) layoutManager).getOrientation() != LinearLayoutManager.VERTICAL) {
-                throw new IllegalArgumentException("目前只适用于垂直方向");
+                throw new IllegalArgumentException("Currently RecyclerViewHeader supports only VERTICAL orientation LayoutManagers.");
             }
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             if (((StaggeredGridLayoutManager) layoutManager).getOrientation() != StaggeredGridLayoutManager.VERTICAL) {
-                throw new IllegalArgumentException("目前只适用于垂直方向");
+                throw new IllegalArgumentException("Currently RecyclerViewHeader supports only VERTICAL orientation StaggeredGridLayoutManagers.");
             }
         }
 
-        if (!alreadyAligned) {
-            ViewParent parent = recyclerView.getParent();
+        if (!headerAlreadyAligned) {
+            ViewParent parent = recycler.getParent();
             if (parent != null &&
                     !(parent instanceof LinearLayout) &&
                     !(parent instanceof FrameLayout) &&
                     !(parent instanceof RelativeLayout)) {
-                throw new IllegalStateException("RecyclerAttachView的父布局只能是LinearLayout,FrameLayout,RelativeLayout三者之一,其他的不适用");
+                throw new IllegalStateException("Currently, NOT already aligned RecyclerViewHeader " +
+                        "can only be used for RecyclerView with a parent of one of types: LinearLayout, FrameLayout, RelativeLayout.");
             }
         }
     }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        mRecyclerWantsTouchEvent = mRecyclerView.onInterceptTouchEvent(ev);
+        mRecyclerWantsTouchEvent = mRecycler.onInterceptTouchEvent(ev);
         if (mRecyclerWantsTouchEvent && ev.getAction() == MotionEvent.ACTION_DOWN) {
             mDownScroll = mCurrentScroll;
         }
@@ -187,35 +215,37 @@ public class RecyclerAttachView extends RelativeLayout {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
         if (mRecyclerWantsTouchEvent) {
             int scrollDiff = mCurrentScroll - mDownScroll;
-            MotionEvent recyclerEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(), event.getAction(), event.getX(), event.getY() - scrollDiff, event.getMetaState());
-            mRecyclerView.onTouchEvent(recyclerEvent);
+            MotionEvent recyclerEvent =
+                    MotionEvent.obtain(event.getDownTime(), event.getEventTime(), event.getAction(),
+                            event.getX(), event.getY() - scrollDiff, event.getMetaState());
+            mRecycler.onTouchEvent(recyclerEvent);
             return false;
         }
         return super.onTouchEvent(event);
     }
 
-    private class AttachItemDecoration extends RecyclerView.ItemDecoration {
-        private int attachHeight;
-        private int childrenCount;
+    private class HeaderItemDecoration extends RecyclerView.ItemDecoration {
+        private int mHeaderHeight;
+        private int mNumberOfChildren;
 
-        public AttachItemDecoration(RecyclerView.LayoutManager layoutManager, int height) {
+        public HeaderItemDecoration(RecyclerView.LayoutManager layoutManager, int height) {
             if (layoutManager.getClass() == LinearLayoutManager.class) {
-                childrenCount = 1;
+                mNumberOfChildren = 1;
             } else if (layoutManager.getClass() == GridLayoutManager.class) {
-                childrenCount = ((GridLayoutManager) layoutManager).getSpanCount();
+                mNumberOfChildren = ((GridLayoutManager) layoutManager).getSpanCount();
             } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-                childrenCount = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
+                mNumberOfChildren = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
             }
-            attachHeight = height;
+            mHeaderHeight = height;
         }
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             super.getItemOffsets(outRect, view, parent, state);
-            int value = (parent.getChildLayoutPosition(view) < childrenCount) ? attachHeight : 0;
+            int value = (parent.getChildLayoutPosition(view) < mNumberOfChildren) ? mHeaderHeight : 0;
             if (mReversed) {
                 outRect.bottom = value;
             } else {

@@ -26,12 +26,10 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1.0</item>
-        <!--<item name="android:layout_marginTop">5dp</item>-->
-        <!--<item name="android:layout_marginBottom">5dp</item>-->
         <item name="android:gravity">center</item>
         <item name="android:button">@null</item>
         <item name="android:textSize">@dimen/text_body</item>
-        <item name="android:textColor">@color/text_color_gray2red_selector</item>
+        <item name="android:textColor">@color/text_color_gary2blue_selector</item>
     </style>
     <!--背景有阴影-->
     <style name="PopupViewTheme_Default">

@@ -42,6 +42,10 @@ public abstract class RecyclerViewAdapter<Data> extends RecyclerView.Adapter<Bas
         this.mDatas = datas;
     }
 
+    @Override
+    public int getItemCount() {
+        return mDatas != null ? mDatas.size() : 0;
+    }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
