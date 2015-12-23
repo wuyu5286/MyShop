@@ -1,4 +1,4 @@
-package com.jumeng.shop.widget;
+package com.jumeng.shop.widget.recycler;
 
 import android.content.Context;
 import android.graphics.Canvas;

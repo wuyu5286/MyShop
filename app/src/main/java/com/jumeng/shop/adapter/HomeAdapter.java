@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import com.jumeng.shop.R;
 import com.jumeng.shop.holder.BaseViewHolder;
 import com.jumeng.shop.holder.HomeHolder;
-import com.jumeng.shop.widget.RecyclerViewAdapter;
 
 /**
  * ============================================================
@@ -15,7 +14,7 @@ import com.jumeng.shop.widget.RecyclerViewAdapter;
  * 时 间 : 2015/12/23.
  * ============================================================
  */
-public class HomeAdapter extends RecyclerViewAdapter<String> {
+public class HomeAdapter extends DefaultAdapter<String> {
 
     public HomeAdapter(Context context, String[] strings) {
         super(context, strings);

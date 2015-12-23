@@ -1,12 +1,12 @@
 package com.jumeng.shop.fragment;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.v7.widget.DefaultItemAnimator;
 
 import com.jumeng.shop.R;
 import com.jumeng.shop.adapter.HomeAdapter;
 import com.jumeng.shop.fragment.delegate.HomeDelegate;
+import com.jumeng.shop.widget.recycler.RecyclerUtils;
+import com.jumeng.shop.widget.recycler.WrapRecyclerView;
 
 /**
  * ============================================================
@@ -16,26 +16,19 @@ import com.jumeng.shop.fragment.delegate.HomeDelegate;
  * ============================================================
  */
 public class HomeFragment extends BaseFragment<HomeDelegate> {
-
-    private View mView;
-    private RecyclerView mRecyclerView;
-
     @Override
     protected Class<HomeDelegate> getDelegateClass() {
         return HomeDelegate.class;
     }
 
-    String[] mStrings = {"aaa", "ccc", "cccaaa", "ddd"};
-
+    String[] mStrings = {"aaa", "ccc", "ll", "ddd"};
 
     @Override
     protected void onBind() {
         super.onBind();
-        mView = viewDelegate.getView();
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.home_recycler_view);
-        LinearLayoutManager manager = new LinearLayoutManager(activity);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setAdapter(new HomeAdapter(activity, mStrings));
+        WrapRecyclerView recyclerView = viewDelegate.getRecyclerView();
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addHeaderView(RecyclerUtils.getView(R.layout.home_header, true));
+        recyclerView.setAdapter(new HomeAdapter(activity, mStrings));
     }
 }

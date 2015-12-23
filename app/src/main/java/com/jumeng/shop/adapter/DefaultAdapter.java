@@ -1,4 +1,4 @@
-package com.jumeng.shop.widget;
+package com.jumeng.shop.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -20,20 +20,20 @@ import java.util.List;
  * 时 间 : 2015/12/17.
  * ============================================================
  */
-public abstract class RecyclerViewAdapter<Data> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class DefaultAdapter<Data> extends RecyclerView.Adapter<BaseViewHolder> {
 
     private List<Data> mDatas;
     private Context mContext;
 
-    public RecyclerViewAdapter(Context context) {
+    public DefaultAdapter(Context context) {
         init(context, new ArrayList<Data>());
     }
 
-    public RecyclerViewAdapter(Context context, Data[] datas) {
+    public DefaultAdapter(Context context, Data[] datas) {
         init(context, Arrays.asList(datas));
     }
 
-    public RecyclerViewAdapter(Context context, List<Data> datas) {
+    public DefaultAdapter(Context context, List<Data> datas) {
         init(context, datas);
     }
 

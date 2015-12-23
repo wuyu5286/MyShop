@@ -1,4 +1,4 @@
-package com.jumeng.shop.widget;
+package com.jumeng.shop.widget.recycler;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
