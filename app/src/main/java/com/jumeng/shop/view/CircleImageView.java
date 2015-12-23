@@ -25,11 +25,7 @@ import com.jumeng.shop.R;
 
 /**
  * ============================================================
-<<<<<<< HEAD
  * 描 述 : 圆形控件
-=======
- * 描 述 :
->>>>>>> 00eb8f4861eb752da35b7257d832484522cf2d2f
  * 作 者 : 鸿浩
  * 时 间 : 2015/12/10.
  * ============================================================
@@ -38,11 +34,9 @@ public class CircleImageView extends ImageView {
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
-<<<<<<< HEAD
+
     private static final int COLOR_DRAWABLE_DIMENSION = 2;
-=======
-    private static final int COLORDRAWABLE_DIMENSION = 2;
->>>>>>> 00eb8f4861eb752da35b7257d832484522cf2d2f
+
 
     private static final int DEFAULT_BORDER_WIDTH = 0;
     private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
