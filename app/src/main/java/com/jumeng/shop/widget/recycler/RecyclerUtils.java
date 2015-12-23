@@ -24,9 +24,4 @@ public class RecyclerUtils {
         }
         return view;
     }
-
-    public static int dip2px(float dpValue) {
-        final float scale = UIUtils.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
 }

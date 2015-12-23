@@ -3,6 +3,7 @@ package com.jumeng.shop.holder;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
@@ -17,10 +18,10 @@ import butterknife.ButterKnife;
 public abstract class BaseViewHolder<Data> extends RecyclerView.ViewHolder {
     private Data data;
 
-//    public BaseViewHolder(View itemView) {
-//        super(itemView);
-//        ButterKnife.bind(this, itemView);
-//    }
+    public BaseViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+    }
 
     public BaseViewHolder(ViewGroup parent, @LayoutRes int res) {
         super(LayoutInflater.from(parent.getContext()).inflate(res, parent, false));

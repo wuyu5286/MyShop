@@ -21,7 +21,7 @@ public class HomeFragment extends BaseFragment<HomeDelegate> {
         return HomeDelegate.class;
     }
 
-    String[] mStrings = {"aaa", "ccc", "ll", "ddd"};
+    String[] mStrings = {"一 月Jan.", "二月Feb二月Feb二月Feb二月Feb二月Feb二月Feb二月Feb.", "三 月Mar.", "四 月Apr.", "五 月May.", "六 月Jun.", "七 月Jul.", "八 月Aug.", "九 月Sep.", "十 月Oct.", "十一月Nov.", "十二月Dec."};
 
     @Override
     protected void onBind() {
