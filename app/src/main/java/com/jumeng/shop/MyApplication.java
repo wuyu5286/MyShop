@@ -26,13 +26,8 @@ public class MyApplication extends Application {
         instance = this;
         mainThreadId = android.os.Process.myTid();
         mainHandler = new Handler();
-<<<<<<< HEAD
         KLog.init(BuildConfig.LOG_DEBUG);//debug打印
         PreferencesUtils.instance().init(this);//数据存储
-=======
-        KLog.init(BuildConfig.LOG_DEBUG);
-        PreferencesUtils.instance().init(this);
->>>>>>> 00eb8f4861eb752da35b7257d832484522cf2d2f
         DbCore.init(this);
     }
 
