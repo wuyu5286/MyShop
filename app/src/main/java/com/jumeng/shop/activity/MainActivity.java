@@ -1,5 +1,9 @@
 package com.jumeng.shop.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,7 +21,11 @@ import com.jumeng.shop.fragment.HomeFragment;
 import com.jumeng.shop.fragment.MoreFragment;
 import com.jumeng.shop.fragment.SelfFragment;
 import com.jumeng.shop.fragment.TogetherFragment;
+import com.jumeng.shop.utils.AnimatorUtils;
 import com.jumeng.shop.utils.ToastUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ============================================================
@@ -35,6 +43,7 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     private GrabFragment mGrabFragment;
     private SelfFragment mSelfFragment;
     private FragmentManager mFragmentManager;
+    private boolean isOpen = false;
 
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -52,6 +61,13 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
         mFragmentManager = getFragmentManager();
         onTabSelected(0);
         viewDelegate.getMainMore().setOnClickListener(this);
+        viewDelegate.getMainMenu().setOnClickListener(this);
+        viewDelegate.getMainMenuItem().setOnClickListener(this);
+        viewDelegate.getMainMenu().setOnClickListener(this);
+        viewDelegate.getMainMenuItem1().setOnClickListener(this);
+        viewDelegate.getMainMenuItem2().setOnClickListener(this);
+        viewDelegate.getMainMenuItem3().setOnClickListener(this);
+        viewDelegate.getMainMenuItem4().setOnClickListener(this);
         viewDelegate.getMainTab().setOnCheckedChangeListener(this);
     }
 
@@ -68,7 +84,25 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_more:
-                onTabSelected(2);
+                showMenu();
+                break;
+            case R.id.main_menu_item:
+                hideMenu();
+                break;
+            case R.id.main_menu:
+                hideMenu();
+                break;
+            case R.id.main_menu_item1:
+                ToastUtils.show("1");
+                break;
+            case R.id.main_menu_item2:
+                ToastUtils.show("2");
+                break;
+            case R.id.main_menu_item3:
+                ToastUtils.show("3");
+                break;
+            case R.id.main_menu_item4:
+                ToastUtils.show("4");
                 break;
         }
     }
@@ -177,6 +211,10 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
 
     @Override
     public boolean handleBackPressed() {
+        if (!isOpen) {
+            hideMenu();
+            return true;
+        }
         long secondTime = System.currentTimeMillis();
         //如果两次按键的时间间隔大于1000毫秒,则不退出
         if (secondTime - firstTime > 1000) {
@@ -186,5 +224,79 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             exitApp();
         }
         return true;
+    }
+
+
+    private void showMenu() {
+        isOpen = false;
+        viewDelegate.getMainMenu().setVisibility(View.VISIBLE);
+        List<Animator> animList = new ArrayList<>();
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getMainMenuItem(), AnimatorUtils.rotation(0f, 225f));
+        animList.add(anim);
+        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem1()));
+        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem2()));
+        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem3()));
+        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem4()));
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.setDuration(400);
+//        animSet.setInterpolator(new OvershootInterpolator());
+        animSet.playTogether(animList);
+        animSet.start();
+    }
+
+    private void hideMenu() {
+        isOpen = true;
+        List<Animator> animList = new ArrayList<>();
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getMainMenuItem(), AnimatorUtils.rotation(225f, 0f));
+        animList.add(anim);
+        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem1()));
+        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem2()));
+        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem3()));
+        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem4()));
+        AnimatorSet animSet = new AnimatorSet();
+        animSet.setDuration(400);
+//        animSet.setInterpolator(new AnticipateInterpolator());
+        animSet.playTogether(animList);
+        animSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                viewDelegate.getMainMenu().setVisibility(View.INVISIBLE);
+            }
+        });
+        animSet.start();
+    }
+
+    private Animator createShowItemAnimator(View item) {
+        float dx = viewDelegate.getMainMenuItem().getX() - item.getX();
+        float dy = viewDelegate.getMainMenuItem().getY() - item.getY();
+        item.setRotation(0f);
+        item.setTranslationX(dx);
+        item.setTranslationY(dy);
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(item,
+                AnimatorUtils.rotation(0f, 720f),
+                AnimatorUtils.translationX(dx, 0f),
+                AnimatorUtils.translationY(dy, 0f)
+        );
+        return anim;
+    }
+
+    private Animator createHideItemAnimator(final View item) {
+        float dx = viewDelegate.getMainMenuItem().getX() - item.getX();
+        float dy = viewDelegate.getMainMenuItem().getY() - item.getY();
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(item,
+                AnimatorUtils.rotation(720f, 0f),
+                AnimatorUtils.translationX(0f, dx),
+                AnimatorUtils.translationY(0f, dy)
+        );
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                item.setTranslationX(0f);
+                item.setTranslationY(0f);
+            }
+        });
+        return anim;
     }
 }
