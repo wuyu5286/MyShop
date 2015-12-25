@@ -60,14 +60,14 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
         super.onBind();
         mFragmentManager = getFragmentManager();
         onTabSelected(0);
-        viewDelegate.getMainMore().setOnClickListener(this);
         viewDelegate.getMainMenu().setOnClickListener(this);
-        viewDelegate.getMainMenuItem().setOnClickListener(this);
+        viewDelegate.getOpenMenu().setOnClickListener(this);
+        viewDelegate.getCloseMenu().setOnClickListener(this);
         viewDelegate.getMainMenu().setOnClickListener(this);
-        viewDelegate.getMainMenuItem1().setOnClickListener(this);
-        viewDelegate.getMainMenuItem2().setOnClickListener(this);
-        viewDelegate.getMainMenuItem3().setOnClickListener(this);
-        viewDelegate.getMainMenuItem4().setOnClickListener(this);
+        viewDelegate.getMenuItem1().setOnClickListener(this);
+        viewDelegate.getMenuItem2().setOnClickListener(this);
+        viewDelegate.getMenuItem3().setOnClickListener(this);
+        viewDelegate.getMenuItem4().setOnClickListener(this);
         viewDelegate.getMainTab().setOnCheckedChangeListener(this);
     }
 
@@ -83,26 +83,30 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.main_more:
+            case R.id.open_menu:
                 showMenu();
                 break;
-            case R.id.main_menu_item:
+            case R.id.close_menu:
                 hideMenu();
                 break;
             case R.id.main_menu:
                 hideMenu();
                 break;
-            case R.id.main_menu_item1:
+            case R.id.menu_item1:
                 ToastUtils.show("1");
+                hideMenu();
                 break;
-            case R.id.main_menu_item2:
+            case R.id.menu_item2:
                 ToastUtils.show("2");
+                hideMenu();
                 break;
-            case R.id.main_menu_item3:
+            case R.id.menu_item3:
                 ToastUtils.show("3");
+                hideMenu();
                 break;
-            case R.id.main_menu_item4:
+            case R.id.menu_item4:
                 ToastUtils.show("4");
+                hideMenu();
                 break;
         }
     }
@@ -231,12 +235,12 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
         isOpen = false;
         viewDelegate.getMainMenu().setVisibility(View.VISIBLE);
         List<Animator> animList = new ArrayList<>();
-        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getMainMenuItem(), AnimatorUtils.rotation(0f, 225f));
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getCloseMenu(), AnimatorUtils.rotation(0f, 225f));
         animList.add(anim);
-        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem1()));
-        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem2()));
-        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem3()));
-        animList.add(createShowItemAnimator(viewDelegate.getMainMenuItem4()));
+        animList.add(showItemAnimator(viewDelegate.getMenuItem1()));
+        animList.add(showItemAnimator(viewDelegate.getMenuItem2()));
+        animList.add(showItemAnimator(viewDelegate.getMenuItem3()));
+        animList.add(showItemAnimator(viewDelegate.getMenuItem4()));
         AnimatorSet animSet = new AnimatorSet();
         animSet.setDuration(400);
 //        animSet.setInterpolator(new OvershootInterpolator());
@@ -247,12 +251,12 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     private void hideMenu() {
         isOpen = true;
         List<Animator> animList = new ArrayList<>();
-        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getMainMenuItem(), AnimatorUtils.rotation(225f, 0f));
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getCloseMenu(), AnimatorUtils.rotation(225f, 0f));
         animList.add(anim);
-        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem1()));
-        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem2()));
-        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem3()));
-        animList.add(createHideItemAnimator(viewDelegate.getMainMenuItem4()));
+        animList.add(hideItemAnimator(viewDelegate.getMenuItem1()));
+        animList.add(hideItemAnimator(viewDelegate.getMenuItem2()));
+        animList.add(hideItemAnimator(viewDelegate.getMenuItem3()));
+        animList.add(hideItemAnimator(viewDelegate.getMenuItem4()));
         AnimatorSet animSet = new AnimatorSet();
         animSet.setDuration(400);
 //        animSet.setInterpolator(new AnticipateInterpolator());
@@ -261,15 +265,15 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                viewDelegate.getMainMenu().setVisibility(View.INVISIBLE);
+                viewDelegate.getMainMenu().setVisibility(View.GONE);
             }
         });
         animSet.start();
     }
 
-    private Animator createShowItemAnimator(View item) {
-        float dx = viewDelegate.getMainMenuItem().getX() - item.getX();
-        float dy = viewDelegate.getMainMenuItem().getY() - item.getY();
+    private Animator showItemAnimator(View item) {
+        float dx = viewDelegate.getCloseMenu().getX() - item.getX();
+        float dy = viewDelegate.getCloseMenu().getY() - item.getY();
         item.setRotation(0f);
         item.setTranslationX(dx);
         item.setTranslationY(dy);
@@ -281,9 +285,9 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
         return anim;
     }
 
-    private Animator createHideItemAnimator(final View item) {
-        float dx = viewDelegate.getMainMenuItem().getX() - item.getX();
-        float dy = viewDelegate.getMainMenuItem().getY() - item.getY();
+    private Animator hideItemAnimator(final View item) {
+        float dx = viewDelegate.getCloseMenu().getX() - item.getX();
+        float dy = viewDelegate.getCloseMenu().getY() - item.getY();
         Animator anim = ObjectAnimator.ofPropertyValuesHolder(item,
                 AnimatorUtils.rotation(720f, 0f),
                 AnimatorUtils.translationX(0f, dx),

@@ -1,11 +1,11 @@
 package com.jumeng.shop.activity.delegate;
 
+import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 
 import com.jumeng.shop.R;
 import com.jumeng.shop.interfaces.AppDelegate;
 import com.jumeng.shop.view.CircleImageView;
-import com.jumeng.shop.view.MenuFrameLayout;
 
 import butterknife.Bind;
 
@@ -18,22 +18,22 @@ import butterknife.Bind;
  */
 public class MainDelegate extends AppDelegate {
 
-    @Bind(R.id.main_more)
-    CircleImageView mMainMore;
+    @Bind(R.id.open_menu)
+    CircleImageView mOpenMenu;
     @Bind(R.id.main_tab)
     RadioGroup mMainTab;
+    @Bind(R.id.menu_item1)
+    CircleImageView mMenuItem1;
+    @Bind(R.id.menu_item4)
+    CircleImageView mMenuItem4;
+    @Bind(R.id.menu_item2)
+    CircleImageView mMenuItem2;
+    @Bind(R.id.menu_item3)
+    CircleImageView mMenuItem3;
+    @Bind(R.id.close_menu)
+    CircleImageView mCloseMenu;
     @Bind(R.id.main_menu)
-    MenuFrameLayout mMainMenu;
-    @Bind(R.id.main_menu_item)
-    CircleImageView mMainMenuItem;
-    @Bind(R.id.main_menu_item1)
-    CircleImageView mMainMenuItem1;
-    @Bind(R.id.main_menu_item2)
-    CircleImageView mMainMenuItem2;
-    @Bind(R.id.main_menu_item3)
-    CircleImageView mMainMenuItem3;
-    @Bind(R.id.main_menu_item4)
-    CircleImageView mMainMenuItem4;
+    FrameLayout mMainMenu;
 
     @Override
     public int layoutResId() {
@@ -44,35 +44,35 @@ public class MainDelegate extends AppDelegate {
         return R.id.main_container;
     }
 
-    public CircleImageView getMainMore() {
-        return mMainMore;
-    }
-
     public RadioGroup getMainTab() {
         return mMainTab;
     }
 
-    public MenuFrameLayout getMainMenu() {
+    public FrameLayout getMainMenu() {
         return mMainMenu;
     }
 
-    public CircleImageView getMainMenuItem() {
-        return mMainMenuItem;
+    public CircleImageView getOpenMenu() {
+        return mOpenMenu;
     }
 
-    public CircleImageView getMainMenuItem1() {
-        return mMainMenuItem1;
+    public CircleImageView getCloseMenu() {
+        return mCloseMenu;
     }
 
-    public CircleImageView getMainMenuItem2() {
-        return mMainMenuItem2;
+    public CircleImageView getMenuItem1() {
+        return mMenuItem1;
     }
 
-    public CircleImageView getMainMenuItem3() {
-        return mMainMenuItem3;
+    public CircleImageView getMenuItem2() {
+        return mMenuItem2;
     }
 
-    public CircleImageView getMainMenuItem4() {
-        return mMainMenuItem4;
+    public CircleImageView getMenuItem3() {
+        return mMenuItem3;
+    }
+
+    public CircleImageView getMenuItem4() {
+        return mMenuItem4;
     }
 }

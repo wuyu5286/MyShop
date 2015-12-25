@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.jumeng.shop.view.MenuFrameLayout
-    android:id="@+id/main_menu"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#42000000"
-    android:descendantFocusability="blocksDescendants"
-    android:paddingBottom="2dp"
-    android:paddingTop="2dp"
-    android:visibility="invisible">
+<FrameLayout android:id="@+id/main_menu"
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/shadow"
+             android:descendantFocusability="blocksDescendants"
+             android:paddingBottom="2dp"
+             android:paddingTop="2dp"
+             android:visibility="invisible">
 
     <com.jumeng.shop.view.CircleImageView
-        android:id="@+id/main_menu_item1"
+        android:id="@+id/menu_item1"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="bottom|center_horizontal"
@@ -22,7 +21,7 @@
         android:src="@mipmap/icon_add"/>
 
     <com.jumeng.shop.view.CircleImageView
-        android:id="@+id/main_menu_item4"
+        android:id="@+id/menu_item4"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="bottom|center_horizontal"
@@ -32,7 +31,7 @@
         android:src="@mipmap/icon_add"/>
 
     <com.jumeng.shop.view.CircleImageView
-        android:id="@+id/main_menu_item2"
+        android:id="@+id/menu_item2"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="bottom|center_horizontal"
@@ -42,7 +41,7 @@
         android:src="@mipmap/icon_add"/>
 
     <com.jumeng.shop.view.CircleImageView
-        android:id="@+id/main_menu_item3"
+        android:id="@+id/menu_item3"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="bottom|center_horizontal"
@@ -53,7 +52,7 @@
 
 
     <com.jumeng.shop.view.CircleImageView
-        android:id="@+id/main_menu_item"
+        android:id="@+id/close_menu"
         android:layout_width="52dp"
         android:layout_height="52dp"
         android:layout_gravity="bottom|center_horizontal"
@@ -61,4 +60,4 @@
         app:civ_border_color="@android:color/holo_blue_bright"
         app:civ_border_width="2dp"/>
 
-</com.jumeng.shop.view.MenuFrameLayout>
+</FrameLayout>
