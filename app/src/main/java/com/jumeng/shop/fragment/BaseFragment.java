@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.jumeng.shop.interfaces.IDelegate;
 
+import butterknife.ButterKnife;
+
 /**
  * ============================================================
  * 描 述 : Fragment基础类
@@ -20,7 +22,7 @@ import com.jumeng.shop.interfaces.IDelegate;
  */
 public abstract class BaseFragment<T extends IDelegate> extends Fragment {
 
-    protected T viewDelegate;
+    protected T view;
     protected Activity activity;
 
     @Override
@@ -38,7 +40,7 @@ public abstract class BaseFragment<T extends IDelegate> extends Fragment {
         super.onCreate(savedInstanceState);
 //        activity = getActivity();
         try {
-            viewDelegate = getDelegateClass().newInstance();
+            view = getDelegateClass().newInstance();
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -50,8 +52,8 @@ public abstract class BaseFragment<T extends IDelegate> extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        viewDelegate.init(inflater, container, savedInstanceState);
-        return viewDelegate.getView();
+        view.init(inflater, container, savedInstanceState);
+        return view.getView();
     }
 
     @Override
@@ -83,8 +85,9 @@ public abstract class BaseFragment<T extends IDelegate> extends Fragment {
     @Override
     public final void onDestroy() {
         onDestroyDelegate();
-        viewDelegate = null;
+        view = null;
         super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     protected void beforePause() {

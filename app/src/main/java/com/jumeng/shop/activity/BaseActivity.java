@@ -18,7 +18,7 @@ import java.util.ListIterator;
  * ============================================================
  */
 public abstract class BaseActivity<T extends IDelegate> extends AppCompatActivity {
-    protected T viewDelegate;
+    protected T view;
     private static Activity activity;
     private static List<BaseActivity> activityList = new LinkedList<>();
 
@@ -29,9 +29,9 @@ public abstract class BaseActivity<T extends IDelegate> extends AppCompatActivit
             activityList.add(this);
         }
         try {
-            viewDelegate = getDelegateClass().newInstance();
-            viewDelegate.init(getLayoutInflater(), null, savedInstanceState);
-            setContentView(viewDelegate.getView());
+            view = getDelegateClass().newInstance();
+            view.init(getLayoutInflater(), null, savedInstanceState);
+            setContentView(view.getView());
             onBind();
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public abstract class BaseActivity<T extends IDelegate> extends AppCompatActivit
 
     @Override
     protected void onDestroy() {
-        viewDelegate = null;
+        view = null;
         onDestroyDelegate();
         super.onDestroy();
         synchronized (activityList) {

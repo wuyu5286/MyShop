@@ -60,15 +60,15 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
         super.onBind();
         mFragmentManager = getFragmentManager();
         onTabSelected(0);
-        viewDelegate.getMainMenu().setOnClickListener(this);
-        viewDelegate.getOpenMenu().setOnClickListener(this);
-        viewDelegate.getCloseMenu().setOnClickListener(this);
-        viewDelegate.getMainMenu().setOnClickListener(this);
-        viewDelegate.getMenuItem1().setOnClickListener(this);
-        viewDelegate.getMenuItem2().setOnClickListener(this);
-        viewDelegate.getMenuItem3().setOnClickListener(this);
-        viewDelegate.getMenuItem4().setOnClickListener(this);
-        viewDelegate.getMainTab().setOnCheckedChangeListener(this);
+        view.getMainMenu().setOnClickListener(this);
+        view.getOpenMenu().setOnClickListener(this);
+        view.getCloseMenu().setOnClickListener(this);
+        view.getMainMenu().setOnClickListener(this);
+        view.getMenuItem1().setOnClickListener(this);
+        view.getMenuItem2().setOnClickListener(this);
+        view.getMenuItem3().setOnClickListener(this);
+        view.getMenuItem4().setOnClickListener(this);
+        view.getMainTab().setOnCheckedChangeListener(this);
     }
 
 
@@ -140,7 +140,7 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             case 0:
                 if (null == mHomeFragment) {
                     mHomeFragment = (HomeFragment) FragmentFactory.getFragment(0);
-                    transaction.add(viewDelegate.getMainContainer(), mHomeFragment);
+                    transaction.add(view.getMainContainer(), mHomeFragment);
                 } else {
                     transaction.show(mHomeFragment);
                 }
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             case 1:
                 if (null == mTogetherFragment) {
                     mTogetherFragment = (TogetherFragment) FragmentFactory.getFragment(1);
-                    transaction.add(viewDelegate.getMainContainer(), mTogetherFragment);
+                    transaction.add(view.getMainContainer(), mTogetherFragment);
                 } else {
                     transaction.show(mTogetherFragment);
                 }
@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             case 2:
                 if (null == mMoreFragment) {
                     mMoreFragment = (MoreFragment) FragmentFactory.getFragment(2);
-                    transaction.add(viewDelegate.getMainContainer(), mMoreFragment);
+                    transaction.add(view.getMainContainer(), mMoreFragment);
                 } else {
                     transaction.show(mMoreFragment);
                 }
@@ -164,7 +164,7 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             case 3:
                 if (null == mGrabFragment) {
                     mGrabFragment = (GrabFragment) FragmentFactory.getFragment(3);
-                    transaction.add(viewDelegate.getMainContainer(), mGrabFragment);
+                    transaction.add(view.getMainContainer(), mGrabFragment);
                 } else {
                     transaction.show(mGrabFragment);
                 }
@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             case 4:
                 if (null == mSelfFragment) {
                     mSelfFragment = (SelfFragment) FragmentFactory.getFragment(4);
-                    transaction.add(viewDelegate.getMainContainer(), mSelfFragment);
+                    transaction.add(view.getMainContainer(), mSelfFragment);
                 } else {
                     transaction.show(mSelfFragment);
                 }
@@ -233,14 +233,14 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
 
     private void showMenu() {
         isOpen = false;
-        viewDelegate.getMainMenu().setVisibility(View.VISIBLE);
+        view.getMainMenu().setVisibility(View.VISIBLE);
         List<Animator> animList = new ArrayList<>();
-        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getCloseMenu(), AnimatorUtils.rotation(0f, 225f));
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(view.getCloseMenu(), AnimatorUtils.rotation(0f, 225f));
         animList.add(anim);
-        animList.add(showItemAnimator(viewDelegate.getMenuItem1()));
-        animList.add(showItemAnimator(viewDelegate.getMenuItem2()));
-        animList.add(showItemAnimator(viewDelegate.getMenuItem3()));
-        animList.add(showItemAnimator(viewDelegate.getMenuItem4()));
+        animList.add(showItemAnimator(view.getMenuItem1()));
+        animList.add(showItemAnimator(view.getMenuItem2()));
+        animList.add(showItemAnimator(view.getMenuItem3()));
+        animList.add(showItemAnimator(view.getMenuItem4()));
         AnimatorSet animSet = new AnimatorSet();
         animSet.setDuration(400);
 //        animSet.setInterpolator(new OvershootInterpolator());
@@ -251,12 +251,12 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     private void hideMenu() {
         isOpen = true;
         List<Animator> animList = new ArrayList<>();
-        Animator anim = ObjectAnimator.ofPropertyValuesHolder(viewDelegate.getCloseMenu(), AnimatorUtils.rotation(225f, 0f));
+        Animator anim = ObjectAnimator.ofPropertyValuesHolder(view.getCloseMenu(), AnimatorUtils.rotation(225f, 0f));
         animList.add(anim);
-        animList.add(hideItemAnimator(viewDelegate.getMenuItem1()));
-        animList.add(hideItemAnimator(viewDelegate.getMenuItem2()));
-        animList.add(hideItemAnimator(viewDelegate.getMenuItem3()));
-        animList.add(hideItemAnimator(viewDelegate.getMenuItem4()));
+        animList.add(hideItemAnimator(view.getMenuItem1()));
+        animList.add(hideItemAnimator(view.getMenuItem2()));
+        animList.add(hideItemAnimator(view.getMenuItem3()));
+        animList.add(hideItemAnimator(view.getMenuItem4()));
         AnimatorSet animSet = new AnimatorSet();
         animSet.setDuration(400);
 //        animSet.setInterpolator(new AnticipateInterpolator());
@@ -265,15 +265,15 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                viewDelegate.getMainMenu().setVisibility(View.GONE);
+                view.getMainMenu().setVisibility(View.GONE);
             }
         });
         animSet.start();
     }
 
     private Animator showItemAnimator(View item) {
-        float dx = viewDelegate.getCloseMenu().getX() - item.getX();
-        float dy = viewDelegate.getCloseMenu().getY() - item.getY();
+        float dx = view.getCloseMenu().getX() - item.getX();
+        float dy = view.getCloseMenu().getY() - item.getY();
         item.setRotation(0f);
         item.setTranslationX(dx);
         item.setTranslationY(dy);
@@ -286,8 +286,8 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     }
 
     private Animator hideItemAnimator(final View item) {
-        float dx = viewDelegate.getCloseMenu().getX() - item.getX();
-        float dy = viewDelegate.getCloseMenu().getY() - item.getY();
+        float dx = view.getCloseMenu().getX() - item.getX();
+        float dy = view.getCloseMenu().getY() - item.getY();
         Animator anim = ObjectAnimator.ofPropertyValuesHolder(item,
                 AnimatorUtils.rotation(720f, 0f),
                 AnimatorUtils.translationX(0f, dx),

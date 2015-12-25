@@ -22,6 +22,11 @@ public abstract class AppDelegate implements IDelegate {
     public void init(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(layoutResId(), container, false);
         ButterKnife.bind(this, rootView);
+        onBind();
+    }
+
+    protected void onBind() {
+
     }
 
     @Override
