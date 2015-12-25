@@ -65,7 +65,7 @@ public class SplashActivity extends AppCompatActivity {
                 MainActivity.launch(SplashActivity.this);
                 finish();
             }
-        }, 500);
+        }, 2000);
     }
 
     private void toGuide() {
