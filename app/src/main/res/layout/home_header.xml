@@ -6,7 +6,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="205dp"
         android:scaleType="fitXY"
         android:src="@mipmap/home_header_bg"/>
 
@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="163dp"
+        android:layout_marginTop="150dp"
         android:gravity="center_horizontal"
         android:text="DEC"
         android:textColor="@color/gray"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="174.5dp"
+        android:layout_marginTop="161dp"
         android:gravity="center_horizontal"
         android:text="23"
         android:textColor="@color/white"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="203dp"
+        android:layout_marginTop="190dp"
         android:gravity="center_horizontal"
         android:text="2015"
         android:textColor="@color/white"
@@ -50,7 +50,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:src="@color/shadow"
         app:civ_border_color="@color/white"
         app:civ_border_width="1dp"/>
@@ -61,7 +61,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="75dp"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="110dp"
         android:src="@color/shadow"
         app:civ_border_color="@color/white"
         app:civ_border_width="1dp"/>
@@ -73,7 +73,7 @@
         android:layout_gravity="right"
         android:layout_marginEnd="120dp"
         android:layout_marginRight="120dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:src="@color/shadow"
         app:civ_border_color="@color/white"
         app:civ_border_width="1dp"/>
@@ -85,7 +85,7 @@
         android:layout_gravity="right"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="40dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:src="@color/shadow"
         app:civ_border_color="@color/white"
         app:civ_border_width="1dp"/>
