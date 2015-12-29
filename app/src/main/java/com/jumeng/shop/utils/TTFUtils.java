@@ -14,5 +14,6 @@ public class TTFUtils {
     public static void setTTF(TextView view) {
         Typeface typeface = Typeface.createFromAsset(UIUtils.getContext().getAssets(), "iconfont.ttf");
         view.setTypeface(typeface);
+        view.setTextSize(25);
     }
 }

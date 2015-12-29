@@ -29,13 +29,10 @@ public class FragmentFactory {
             case 1:// 一起买
                 fragment = new TogetherFragment();
                 break;
-            case 2:// 更多
-                fragment = new MoreFragment();
-                break;
-            case 3:// 九点抢
+            case 2:// 九点抢
                 fragment = new GrabFragment();
                 break;
-            case 4:// 我的
+            case 3:// 我的
                 fragment = new SelfFragment();
                 break;
         }

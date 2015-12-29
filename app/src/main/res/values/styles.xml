@@ -8,6 +8,7 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="android:windowAnimationStyle">@style/start_Anim</item>
     </style>
     <!--Activity转场动画-->
@@ -21,16 +22,7 @@
         <item name="android:activityCloseEnterAnimation">@android:anim/fade_in</item>
         <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
     </style>
-    <!--底部导航栏-->
-    <style name="MainBottomTab">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1.0</item>
-        <item name="android:gravity">center</item>
-        <item name="android:button">@null</item>
-        <item name="android:textSize">@dimen/text_caption</item>
-        <item name="android:textColor">@color/text_color_gary2blue_selector</item>
-    </style>
+
     <!--背景有阴影-->
     <style name="PopupViewTheme_Default">
         <item name="android:windowFrame">@null</item>
@@ -61,6 +53,37 @@
     <style name="PopupViewTopAnimation" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/popup_view_top_anim_enter</item>
         <item name="android:windowExitAnimation">@anim/popup_view_top_anim_exit</item>
+    </style>
+
+
+    <!--底部导航栏-->
+    <style name="MainBottomTab">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:textSize">@dimen/text_12sp</item>
+        <item name="android:textColor">@color/text_color_gary2blue_selector</item>
+    </style>
+    <!--一起买导航栏-->
+    <style name="TogetherTab">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/text_12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextView" parent="TextAppearance.AppCompat.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
 </resources>

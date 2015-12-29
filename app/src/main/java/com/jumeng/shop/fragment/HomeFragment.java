@@ -31,8 +31,6 @@ public class HomeFragment extends BaseFragment<HomeDelegate> implements View.OnC
         super.onBind();
         WrapRecyclerView recyclerView = view.getRecyclerView();
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        View header = RecyclerUtils.getView(R.layout.home_header, true);
-//        recyclerView.addHeaderView(header,true);
         recyclerView.setAdapter(new HomeAdapter(activity, mStrings));
         String[] date = DateUtil.getDate(System.currentTimeMillis());
         view.getYear().setText(date[0]);

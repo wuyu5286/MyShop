@@ -16,10 +16,10 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="1dp"
+            android:layout_width="1px"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:src="@color/gray"/>
+            android:src="@color/gray_light"/>
 
         <com.jumeng.shop.view.CircleImageView
             android:layout_width="25dp"
@@ -51,7 +51,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
             android:text="@string/app_name"
-            android:textSize="@dimen/text_body"/>
+            android:textSize="@dimen/text_14sp"/>
 
         <ImageView
             android:layout_width="5dp"

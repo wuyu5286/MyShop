@@ -18,7 +18,6 @@ import com.jumeng.shop.constant.ConstantValue;
 import com.jumeng.shop.fragment.FragmentFactory;
 import com.jumeng.shop.fragment.GrabFragment;
 import com.jumeng.shop.fragment.HomeFragment;
-import com.jumeng.shop.fragment.MoreFragment;
 import com.jumeng.shop.fragment.SelfFragment;
 import com.jumeng.shop.fragment.TogetherFragment;
 import com.jumeng.shop.utils.AnimatorUtils;
@@ -39,7 +38,6 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
     private int index = 0;
     private HomeFragment mHomeFragment;
     private TogetherFragment mTogetherFragment;
-    private MoreFragment mMoreFragment;
     private GrabFragment mGrabFragment;
     private SelfFragment mSelfFragment;
     private FragmentManager mFragmentManager;
@@ -121,10 +119,10 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
                 onTabSelected(1);
                 break;
             case R.id.main_grab:
-                onTabSelected(3);
+                onTabSelected(2);
                 break;
             case R.id.main_self:
-                onTabSelected(4);
+                onTabSelected(3);
                 break;
         }
     }
@@ -154,24 +152,16 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
                 }
                 break;
             case 2:
-                if (null == mMoreFragment) {
-                    mMoreFragment = (MoreFragment) FragmentFactory.getFragment(2);
-                    transaction.add(view.getMainContainer(), mMoreFragment);
-                } else {
-                    transaction.show(mMoreFragment);
-                }
-                break;
-            case 3:
                 if (null == mGrabFragment) {
-                    mGrabFragment = (GrabFragment) FragmentFactory.getFragment(3);
+                    mGrabFragment = (GrabFragment) FragmentFactory.getFragment(2);
                     transaction.add(view.getMainContainer(), mGrabFragment);
                 } else {
                     transaction.show(mGrabFragment);
                 }
                 break;
-            case 4:
+            case 3:
                 if (null == mSelfFragment) {
-                    mSelfFragment = (SelfFragment) FragmentFactory.getFragment(4);
+                    mSelfFragment = (SelfFragment) FragmentFactory.getFragment(3);
                     transaction.add(view.getMainContainer(), mSelfFragment);
                 } else {
                     transaction.show(mSelfFragment);
@@ -188,9 +178,6 @@ public class MainActivity extends BaseActivity<MainDelegate> implements View.OnC
         }
         if (mTogetherFragment != null) {
             transaction.hide(mTogetherFragment);
-        }
-        if (mMoreFragment != null) {
-            transaction.hide(mMoreFragment);
         }
         if (mGrabFragment != null) {
             transaction.hide(mGrabFragment);

@@ -24,7 +24,7 @@ public class HomeHeaderHolder extends BaseHolder<Long> {
 
     @Override
     protected int layoutResID() {
-        return R.layout.home_header;
+        return R.layout.include_home_header;
     }
 
     @Override

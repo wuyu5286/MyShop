@@ -19,7 +19,7 @@
         android:gravity="center_horizontal"
         android:text="DEC"
         android:textColor="@color/gray"
-        android:textSize="@dimen/text_small"/>
+        android:textSize="@dimen/text_12sp"/>
 
     <TextView
         android:id="@+id/header_day"
@@ -30,7 +30,7 @@
         android:gravity="center_horizontal"
         android:text="23"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_title"
+        android:textSize="@dimen/text_16sp"
         android:textStyle="bold"/>
 
     <TextView

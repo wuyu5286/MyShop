@@ -2,6 +2,7 @@ package com.jumeng.shop.utils;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 
@@ -29,7 +30,12 @@ public class UIUtils {
     }
 
     public static int getColor(int resId) {
-        return ContextCompat.getColor(getContext(), resId);
+        final int version = Build.VERSION.SDK_INT;
+        if (version >= 23) {
+            return ContextCompat.getColor(getContext(), resId);
+        } else {
+            return getResources().getColor(resId);
+        }
     }
 
     /**

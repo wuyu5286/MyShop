@@ -17,8 +17,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray"/>
+            android:layout_height="1dp"
+            android:background="@color/divider"/>
 
         <RadioGroup
             android:id="@+id/main_tab"
@@ -50,7 +50,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/icon_add"
-                app:civ_border_color="@android:color/holo_blue_bright"
+                app:civ_border_color="#75c3fa"
                 app:civ_border_width="2dp"/>
 
             <RadioButton
@@ -68,5 +68,5 @@
 
     </LinearLayout>
 
-    <include layout="@layout/include_menu"/>
+    <include layout="@layout/include_main_menu"/>
 </FrameLayout>
